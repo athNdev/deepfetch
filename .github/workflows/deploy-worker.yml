@@ -22,14 +22,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-
-      - name: Install Wrangler
-        run: npm install -g wrangler
+          node-version: '20'
 
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          workingDirectory: '.'
+          wranglerVersion: '3.78.10'
           command: deploy
