@@ -677,9 +677,14 @@ class AdvancedWebResourceDownloader {
         this.log(`🌐 Attempting to fetch: ${url}`, 'info');
         try {
             // Use Netlify Functions CORS proxy endpoint
-            // Replace 'your-netlify-site' with your actual Netlify site name
-            const proxyUrl = `https://your-netlify-site.netlify.app/.netlify/functions/cors-proxy?url=${encodeURIComponent(url)}`;
-            this.log(`🔄 Rewriting URL to: ${proxyUrl}`, 'info');
+            // Detect if running locally (localhost/127.0.0.1) vs production
+            const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            const baseUrl = isLocal 
+                ? 'http://localhost:8888' 
+                : window.location.origin; // Use current site's origin in production
+            
+            const proxyUrl = `${baseUrl}/.netlify/functions/cors-proxy?url=${encodeURIComponent(url)}`;
+            this.log(`🔄 Rewriting URL to: ${proxyUrl} (${isLocal ? 'LOCAL' : 'PRODUCTION'})`, 'info');
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 180000);
             const response = await fetch(proxyUrl, {
