@@ -1,3 +1,17 @@
+
+/**
+ * ADVANCED WEB RESOURCE DOWNLOADER
+ * =================================
+ * This tool allows you to download ANY and ALL resources from a website URL, including:
+ *   - Static files (HTML, JS, CSS, images, fonts, etc.)
+ *   - Dynamically loaded resources (AJAX, API, lazy-loaded, etc.)
+ *   - Files and endpoints that are NOT accessible via wget, curl, or simple scraping tools
+ *   - Source maps and original source files (when available)
+ *
+ * It simulates browser behavior, recursively discovers resources, and uses a CORS proxy to bypass browser restrictions.
+ *
+ * This is far more powerful than wget or traditional downloaders.
+ */
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
@@ -662,8 +676,9 @@ class AdvancedWebResourceDownloader {
     async fetchWithCORS(url) {
         this.log(`🌐 Attempting to fetch: ${url}`, 'info');
         try {
-            // Use Vercel CORS proxy endpoint
-            const proxyUrl = `https://your-vercel-app.vercel.app/api/cors-proxy/${url}`;
+            // Use Netlify Functions CORS proxy endpoint
+            // Replace 'your-netlify-site' with your actual Netlify site name
+            const proxyUrl = `https://your-netlify-site.netlify.app/.netlify/functions/cors-proxy?url=${encodeURIComponent(url)}`;
             this.log(`🔄 Rewriting URL to: ${proxyUrl}`, 'info');
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 180000);
