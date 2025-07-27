@@ -662,8 +662,8 @@ class AdvancedWebResourceDownloader {
     async fetchWithCORS(url) {
         this.log(`🌐 Attempting to fetch: ${url}`, 'info');
         try {
-            // Use external CORS proxy
-            const proxyUrl = `http://localhost:8082/${url}`;
+            // Use Vercel CORS proxy endpoint
+            const proxyUrl = `https://your-vercel-app.vercel.app/api/cors-proxy/${url}`;
             this.log(`🔄 Rewriting URL to: ${proxyUrl}`, 'info');
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 180000);
