@@ -1,0 +1,44 @@
+{
+  "name": "web-resource-downloader",
+  "version": "1.0.0",
+  "description": "WASM-based web application for downloading HTTP resources locally",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "start": "webpack serve --mode development"
+  },
+  "keywords": [
+    "wasm",
+    "web-scraping",
+    "downloader",
+    "puppeteer",
+    "resources"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "file-saver": "^2.0.5",
+    "jszip": "^3.10.1",
+    "puppeteer-core": "^21.5.2"
+  },
+  "devDependencies": {
+    "buffer": "^6.0.3",
+    "copy-webpack-plugin": "^11.0.0",
+    "crypto-browserify": "^3.12.0",
+    "css-loader": "^6.8.1",
+    "html-webpack-plugin": "^5.5.3",
+    "https-browserify": "^1.0.0",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
+    "querystring-es3": "^0.2.1",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "style-loader": "^3.3.3",
+    "url": "^0.11.3",
+    "util": "^0.12.5",
+    "vm-browserify": "^1.1.2",
+    "webpack": "^5.100.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.2"
+  }
+}
