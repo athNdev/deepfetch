@@ -8,3 +8,9 @@ node_modules
 
 # Wrangler output
 .wrangler
+
+# Local development tools (don't push to repo)
+tools/
+*.ps1
+test-*.js
+verify-*.js
