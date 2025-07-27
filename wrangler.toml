@@ -10,7 +10,3 @@ name = "deepfetch-cors-proxy"
 # routes = [
 #   { pattern = "cors-proxy.yourdomain.com/*", zone_name = "yourdomain.com" }
 # ]
-
-# Limits (free tier)
-[limits]
-cpu_ms = 10000
