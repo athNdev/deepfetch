@@ -190,41 +190,41 @@ class AdvancedWebResourceDownloader {
         document.getElementById('start-download').disabled = true;
         document.getElementById('log-container').textContent = '';
         
-        this.log('🚀 Starting advanced download process...');
+        this.log('Starting advanced download process...');
         this.updateProgress(0, 'Initializing advanced browser simulation...');
     }
 
     async executeDownloadProcess(targetUrl) {
         // Phase 1: Download main HTML page
-        this.updateProgress(5, '📄 Phase 1: Downloading main HTML page...');
+        this.updateProgress(5, 'Phase 1: Downloading main HTML page...');
         const html = await this.downloadMainPage(targetUrl);
         
         // Phase 2: Extract and download static resources
-        this.updateProgress(20, '📦 Phase 2: Extracting static resources...');
+        this.updateProgress(20, 'Phase 2: Extracting static resources...');
         const resourceUrls = await this.extractStaticResources(html, targetUrl);
         
         // Phase 3: Download all static resources
-        this.updateProgress(40, '⬇️ Phase 3: Downloading static resources...');
+        this.updateProgress(40, 'Phase 3: Downloading static resources...');
         await this.downloadStaticResources(resourceUrls);
         
         // Phase 4: Process JavaScript files for source maps
-        this.updateProgress(70, '🗺️ Phase 4: Processing source maps...');
+        this.updateProgress(70, 'Phase 4: Processing source maps...');
         await this.processSourceMaps();
         
         // Phase 5: Search for dynamic resources
-        this.updateProgress(85, '🔍 Phase 5: Searching for dynamic resources...');
+        this.updateProgress(85, 'Phase 5: Searching for dynamic resources...');
         await this.findDynamicResources();
         
         // Phase 6: Generate final report
-        this.updateProgress(95, '📊 Phase 6: Generating report...');
+        this.updateProgress(95, 'Phase 6: Generating report...');
         this.generateFinalReport();
         
-        this.updateProgress(100, '🎉 Advanced extraction completed!');
+        this.updateProgress(100, 'Advanced extraction completed!');
         this.showResults();
     }
 
     handleDownloadError(error) {
-        this.log(`❌ Download failed: ${error.message}`, 'error');
+        this.log(`Download failed: ${error.message}`, 'error');
         this.showError(`Download failed: ${error.message}`);
     }
 
@@ -250,7 +250,7 @@ class AdvancedWebResourceDownloader {
                 contentType: 'text/html'
             });
             
-            this.log('✅ Main HTML downloaded successfully');
+            this.log('Main HTML downloaded successfully');
             return html;
             
         } catch (error) {
@@ -277,7 +277,7 @@ class AdvancedWebResourceDownloader {
             this.extractOtherResources(doc, base, resourceUrls);
             
             const urls = Array.from(resourceUrls);
-            this.log(`📦 Found ${urls.length} static resources in HTML`);
+            this.log(`Found ${urls.length} static resources in HTML`);
             
             return urls;
             
@@ -347,7 +347,7 @@ class AdvancedWebResourceDownloader {
                 downloaded++;
                 const progress = 40 + (downloaded / total) * 30; // 40-70%
                 const filename = this.getFilenameFromUrl(resourceUrl);
-                this.updateProgress(progress, `✅ Downloaded: ${filename}`);
+                this.updateProgress(progress, `Downloaded: ${filename}`);
                 // If CSS, parse for url(...) and queue discovered resources
                 if (fileData && fileData.contentType && fileData.contentType.includes('css') && typeof fileData.content === 'string') {
                     const found = this.extractUrlsFromCss(fileData.content, resourceUrl);
@@ -359,7 +359,7 @@ class AdvancedWebResourceDownloader {
         }
         // Download resources found in CSS
         if (cssResources.size > 0) {
-            this.log(`� Found ${cssResources.size} resources in CSS. Downloading...`);
+            this.log(`Found ${cssResources.size} resources in CSS. Downloading...`);
             for (const cssUrl of cssResources) {
                 if (!this.isDownloading) break;
                 try {
@@ -369,7 +369,7 @@ class AdvancedWebResourceDownloader {
                 }
             }
         }
-        this.log(`�📦 Downloaded ${downloaded}/${total} static resources (+CSS resources)`);
+        this.log(`Downloaded ${downloaded}/${total} static resources (+CSS resources)`);
     }
 
     async downloadSingleResource(url) {
@@ -406,7 +406,7 @@ class AdvancedWebResourceDownloader {
 
     async processSourceMaps() {
         const jsFiles = this.getJavaScriptFiles();
-        this.log(`📂 Found ${jsFiles.length} JavaScript files to process`);
+        this.log(`Found ${jsFiles.length} JavaScript files to process`);
         
         let totalSourceFiles = 0;
         
@@ -675,7 +675,7 @@ class AdvancedWebResourceDownloader {
     // =====================================
 
     async fetchWithCORS(url) {
-        this.log(`🌐 Attempting to fetch: ${url}`, 'info');
+        this.log(`Attempting to fetch: ${url}`, 'info');
         try {
             // Get the appropriate CORS proxy URL
             const baseUrl = getCorsProxyUrl();
@@ -685,7 +685,7 @@ class AdvancedWebResourceDownloader {
                            window.location.hostname === '127.0.0.1' ||
                            window.location.hostname === '0.0.0.0';
                 
-            this.log(`🔄 Using CORS proxy: ${proxyUrl} (${isLocal ? 'LOCAL-DEV' : 'PRODUCTION'})`, 'info');
+            this.log(`Using CORS proxy: ${proxyUrl} (${isLocal ? 'LOCAL-DEV' : 'PRODUCTION'})`, 'info');
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 180000);
             const response = await fetch(proxyUrl, {
@@ -700,10 +700,10 @@ class AdvancedWebResourceDownloader {
             if (!response.ok) {
                 throw new Error(`Fetch failed with status ${response.status}`);
             }
-            this.log(`✅ Fetch successful`, 'info');
+            this.log(`Fetch successful`, 'info');
             return response;
         } catch (error) {
-            this.log(`❌ Fetch failed: ${error.message}`, 'error');
+            this.log(`Fetch failed: ${error.message}`, 'error');
             throw new Error(`Fetch failed for ${url}: ${error.message}`);
         }
     }
@@ -874,7 +874,7 @@ class AdvancedWebResourceDownloader {
     // =====================================
 
     generateFinalReport() {
-        this.log(`📊 Final Statistics:`);
+        this.log(`Final Statistics:`);
         this.log(`   Total Files: ${this.stats.totalFiles}`);
         this.log(`   Total Size: ${(this.stats.totalSize / 1024 / 1024).toFixed(2)} MB`);
         this.log(`   Source Files: ${this.stats.sourceFiles}`);
@@ -957,7 +957,7 @@ class AdvancedWebResourceDownloader {
     // =====================================
 
     async downloadAsZip() {
-        this.log('📦 Creating ZIP file...');
+        this.log('Creating ZIP file...');
         
         const zip = new JSZip();
         
@@ -974,7 +974,7 @@ class AdvancedWebResourceDownloader {
         const domain = new URL(targetUrl).hostname;
         
         saveAs(content, `${domain}-advanced-resources.zip`);
-        this.log('✅ ZIP file downloaded!');
+        this.log('ZIP file downloaded!');
     }
 
     downloadSingleFile(filename) {
@@ -993,7 +993,7 @@ class AdvancedWebResourceDownloader {
 
     stopDownload() {
         this.isDownloading = false;
-        this.log('⛔ Download stopped by user');
+        this.log('Download stopped by user');
         document.getElementById('start-download').disabled = false;
     }
 
