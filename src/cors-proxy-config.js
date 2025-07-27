@@ -4,9 +4,8 @@
  */
 
 export const CORS_PROXY_CONFIG = {
-    // Production Cloudflare Worker URL
-    // This will be updated after first deployment
-    PRODUCTION_URL: 'https://deepfetch-cors-proxy.athNdev.workers.dev',
+    // Production Cloudflare Worker URL (VERIFIED - DEPLOYED!)
+    PRODUCTION_URL: 'https://deepfetch-cors-proxy.naphadeatharv.workers.dev',
     
     // Local development options
     LOCAL_DEV: {
