@@ -676,15 +676,25 @@ class AdvancedWebResourceDownloader {
     async fetchWithCORS(url) {
         this.log(`🌐 Attempting to fetch: ${url}`, 'info');
         try {
-            // Use Netlify Functions CORS proxy endpoint
+            // Use CORS proxy endpoint
             // Detect if running locally (localhost/127.0.0.1) vs production
             const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-            const baseUrl = isLocal 
-                ? 'http://localhost:8888' 
-                : window.location.origin; // Use current site's origin in production
             
-            const proxyUrl = `${baseUrl}/.netlify/functions/cors-proxy?url=${encodeURIComponent(url)}`;
-            this.log(`🔄 Rewriting URL to: ${proxyUrl} (${isLocal ? 'LOCAL' : 'PRODUCTION'})`, 'info');
+            let baseUrl;
+            if (isLocal) {
+                // Local development - use Netlify dev server
+                baseUrl = 'http://localhost:8888';
+            } else {
+                // Production - use Cloudflare Worker
+                // Auto-detect based on GitHub repo owner (athNdev)
+                baseUrl = 'https://deepfetch-cors-proxy.athNdev.workers.dev';
+            }
+            
+            const proxyUrl = isLocal 
+                ? `${baseUrl}/.netlify/functions/cors-proxy?url=${encodeURIComponent(url)}`
+                : `${baseUrl}?url=${encodeURIComponent(url)}`;
+                
+            this.log(`🔄 Rewriting URL to: ${proxyUrl} (${isLocal ? 'LOCAL' : 'CLOUDFLARE'})`, 'info');
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 180000);
             const response = await fetch(proxyUrl, {
