@@ -19,7 +19,7 @@
   "dependencies": {
     "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
-    "puppeteer-core": "^21.5.2"
+    "puppeteer-core": "^22.13.1"
   },
   "devDependencies": {
     "buffer": "^6.0.3",
